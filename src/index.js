@@ -46,7 +46,7 @@ client.on('interactionCreate', (interaction) => {
     const question = interaction.options.get('question').value;
     const response = ballResponses[(Math.random() * ballResponses.length) | 0];
 
-    const ballEmbed = new EmbedBuilder().setTitle(`🎱 ${question}`).setDescription(`${response}`).setColor('Random').addFields({name: 'Asked By', value: `${interaction.member.user.username}`});
+    const ballEmbed = new EmbedBuilder().setTitle(`🎱 ${question}`).setDescription(`${response}`).setColor('Random').addFields({name: 'Asked By:', value: `${interaction.member.user.username}`}).setTimestamp();
 
 
     interaction.reply({embeds: [ballEmbed]});
