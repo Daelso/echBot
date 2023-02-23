@@ -24,7 +24,8 @@ const client = new Client({
   ],
 });
 
-
+// /////
+// This whole section is just here to allow me to split up event handlers into their own files.
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
@@ -39,10 +40,7 @@ for (const file of eventFiles) {
   }
 }
 
-
-client.on('ready', (c) => {
-  console.log(` ${c.user.tag} is online.`);
-});
+// ////
 
 
 client.on('messageCreate', (msg) => {
