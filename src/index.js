@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const { Client, IntentsBitField} = require('discord.js');
+const { Client, IntentsBitField, EmbedBuilder} = require('discord.js');
 const ballResponses = require('../json/8ballResponses.json').responses;
 require('dotenv').config();
 
@@ -43,11 +43,22 @@ client.on('interactionCreate', (interaction) => {
 
 
   if(interaction.commandName === '8ball'){
-    const asker = interaction.member.user.username;
     const question = interaction.options.get('question').value;
     const response = ballResponses[(Math.random() * ballResponses.length) | 0];
 
-    interaction.reply(`${asker} asks: ${question} - Magic 8 Ball Response: ${response}`);
+    const ballEmbed = new EmbedBuilder().setTitle(`🎱 ${question}`).setDescription(`${response}`).setColor('Random').addFields({name: 'Asked By', value: `${interaction.member.user.username}`});
+
+
+    interaction.reply({embeds: [ballEmbed]});
+  }
+
+  if(interaction.commandName === 'embed'){
+    const embed = new EmbedBuilder().setTitle('Embed Title').setDescription('Embed description');
+
+
+
+    console.log('sup');
+    interaction.reply({embeds: [embed]});
   }
 
 });
