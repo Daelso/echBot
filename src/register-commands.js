@@ -18,10 +18,6 @@ const commands = [
     name: 'remindme',
     description: 'Will ping you after a set amount of time with a reminder.',
   },
-  {
-    name: 'embed',
-    description: 'Generates an embed.',
-  },
 
 ];
 
