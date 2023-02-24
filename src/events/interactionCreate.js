@@ -37,19 +37,12 @@ module.exports = {
 
 
     if (!interaction.isChatInputCommand()) return;
+    const command = interaction.client.commands.get(interaction.commandName);
 
-
-    // Various chat commands
+    // Chat commands
     try {
-      if (interaction.commandName === '8ball') {
-        const question = interaction.options.get('question').value;
-        const response = ballResponses[(Math.random() * ballResponses.length) | 0];
 
-        const ballEmbed = new EmbedBuilder().setTitle(`🎱 ${question}`).setDescription(`${response}`).setColor('Random').addFields({ name: 'Asked By:', value: `${interaction.member.user.username}` }).setTimestamp();
-
-
-        interaction.reply({ embeds: [ballEmbed] });
-      }
+      await command.execute(interaction);
 
     }
     catch (error) {
