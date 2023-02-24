@@ -10,6 +10,10 @@ const client = new Client({
   intents: [
     IntentsBitField.Flags.Guilds,
     IntentsBitField.Flags.GuildMembers,
+    IntentsBitField.Flags.GuildInvites,
+    IntentsBitField.Flags.GuildScheduledEvents,
+    IntentsBitField.Flags.GuildIntegrations,
+    IntentsBitField.Flags.GuildPresences,
     IntentsBitField.Flags.GuildMessages,
     IntentsBitField.Flags.GuildMessageReactions,
     IntentsBitField.Flags.MessageContent,
@@ -24,8 +28,7 @@ const client = new Client({
   ],
 });
 
-// /////
-// This whole section is just here to allow me to split up event handlers into their own files.
+// This whole section is just here to allow me to split up event handlers into their own files. Otherwise it exists to initiate the client.
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
@@ -39,18 +42,6 @@ for (const file of eventFiles) {
     client.on(event.name, (...args) => event.execute(...args));
   }
 }
-
-// ////
-
-
-client.on('messageCreate', (msg) => {
-  // prevents possible bot trolling
-  if (msg.author.bot) {
-    return;
-  }
-
-  if (msg.content === 'Evan') {msg.reply('Why');}
-});
 
 
 client.login(process.env.TOKEN);
