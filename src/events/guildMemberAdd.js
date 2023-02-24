@@ -1,0 +1,34 @@
+const { Events, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+
+module.exports = {
+  name: Events.GuildMemberAdd,
+  async execute(newUser) {
+
+    const userId = newUser.user.id;
+
+    const newUserEmbed = new EmbedBuilder().setTitle(`${newUser.user.username}, welcome to ECH Clan`)
+      .setURL('https://www.echclan.net/').setDescription(`Welcome to Echelon <@${userId}>, please select the appropriate option below and a staff member will be with you ASAP.`)
+      .setColor('Green')
+      .setTimestamp()
+      .setThumbnail('https://www.echclan.net/img/ECHLogo.73a81d16.png')
+      .addFields(
+        { name: 'Rule 1:', value: 'Must be 18+' },
+        { name: 'Rule 2:', value: 'Be willing to work in a team environment and respecting the chain of command' },
+      )
+      .addFields(
+        { name: 'Rule 3:', value: 'Colonial players only, with no future intentions of playing Warden', inline: true },
+        { name: 'Rule 4:', value: 'Must not be part of another clan. Echelon does not permit double clanning amongst its members', inline: true })
+      .setFooter({ text: 'Wardens go away', iconURL: 'https://www.echclan.net/img/ECHLogo.73a81d16.png' });
+
+
+    const newUserActionRow = new ActionRowBuilder();
+    newUserActionRow.components.push(new ButtonBuilder().setCustomId(`recruitment-${userId}`).setLabel('Regular Recruitment').setStyle(ButtonStyle.Primary));
+
+
+    await newUser.guild.channels.fetch('1078176167321948192')
+      .then(channel => {
+        channel.send({ embeds: [newUserEmbed], components:[newUserActionRow] });
+      });
+
+  },
+};

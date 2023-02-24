@@ -5,8 +5,34 @@ const ballResponses = require('../../json/8ballResponses.json').responses;
 module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction) {
+    // We don't want any PM functionality so just a quick check that this is happening in the server
+    if (!interaction.inGuild()) return;
+
+
+    // Button handling
+    if (interaction.isButton()) {
+      const splitArr = interaction.customId.split('-');
+      const btnType = splitArr[0];
+      const authUserId = splitArr[1];
+      const interactorId = interaction.user.id;
+
+      // Compares the original user id from customID with whoever interacts with it, if they don't match we end method.
+      // This is to prevent other users from messing with buttons not intended for them.
+      if (interactorId !== authUserId) {
+        interaction.reply({ content: 'That doesn\'t belong to you!', ephemeral: true });
+        return;
+      }
+
+      interaction.reply({ content: `<@${authUserId}>, a recruiter has been notified, we will get back to you shortly.`, ephemeral:true });
+
+
+    }
+
+
     if (!interaction.isChatInputCommand()) return;
 
+
+    // Various chat commands
     try {
       if (interaction.commandName === '8ball') {
         const question = interaction.options.get('question').value;
@@ -18,15 +44,6 @@ module.exports = {
         interaction.reply({ embeds: [ballEmbed] });
       }
 
-      if (interaction.commandName === 'embed') {
-        const belle = interaction.guild.emojis.cache.find(emoji => emoji.name === 'goth');
-        const embed = new EmbedBuilder().setTitle('Embed Title').setDescription('meme');
-
-        const message = await interaction.reply({ content: 'You can react with custom emojis!', fetchReply: true });
-
-        message.react(belle);
-
-      }
     }
     catch (error) {
       console.error(`Error executing ${interaction.commandName}`);
