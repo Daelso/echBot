@@ -1,4 +1,5 @@
 const { Events, EmbedBuilder } = require('discord.js');
+const { recruitToStaff } = require('../btns/btnMethods.js');
 
 
 module.exports = {
@@ -28,6 +29,21 @@ module.exports = {
         interaction.editReply({ content: 'That doesn\'t belong to you!' });
         return;
       }
+
+      switch (btnType) {
+      case 'recruitment':
+        recruitToStaff(interaction);
+        break;
+      case 'ambassador':
+        console.log('Oranges are $0.59 a pound.');
+        break;
+      case 'attache':
+        console.log('Oranges are $0.59 a pound.');
+        break;
+      default:
+        console.log(`Sorry, we are out of ${expr}.`);
+      }
+
 
       interaction.editReply({ content:`<@${authUserId}>, a recruiter has been notified, we will get back to you shortly.` });
 
