@@ -21,6 +21,7 @@ module.exports = {
       .setFooter({ text: 'Wardens go away', iconURL: 'https://www.echclan.net/img/ECHLogo.73a81d16.png' });
 
 
+    // Creates our action row of buttons
     const newUserActionRow = new ActionRowBuilder();
     newUserActionRow.components.push(new ButtonBuilder().setCustomId(`recruitment-${userId}`).setLabel('Regular Recruitment').setStyle(ButtonStyle.Primary));
 

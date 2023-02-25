@@ -1,5 +1,4 @@
 const { Events, EmbedBuilder } = require('discord.js');
-const ballResponses = require('../../json/8ballResponses.json').responses;
 
 
 module.exports = {
@@ -35,6 +34,7 @@ module.exports = {
 
     }
 
+    // //////////////////////////// Chat command handling below
 
     if (!interaction.isChatInputCommand()) return;
     const command = interaction.client.commands.get(interaction.commandName);
