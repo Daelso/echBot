@@ -1,5 +1,5 @@
-const { Events, EmbedBuilder } = require('discord.js');
-const { recruitToStaff } = require('../btns/btnMethods.js');
+const { Events } = require('discord.js');
+const { recruitToStaff, ambassadorToStaff, attacheToStaff, beWithYouSoon, denied, grantRecruit, grantAmbassador, grantAttache } = require('../btns/btnMethods.js');
 
 
 module.exports = {
@@ -33,19 +33,51 @@ module.exports = {
       switch (btnType) {
       case 'recruitment':
         recruitToStaff(interaction);
+        interaction.editReply({ content:`<@${authUserId}>, a recruiter has been notified. We will get back to you shortly.` });
+        // If I don't make this delete someone will spam the fuck out of you
+        // interaction.message.delete();
         break;
       case 'ambassador':
-        console.log('Oranges are $0.59 a pound.');
+        ambassadorToStaff(interaction);
+        interaction.editReply({ content:`<@${authUserId}>, a staff member has been notified. We will get back to you shortly.` });
+        // If I don't make this delete someone will spam the fuck out of you
+        // interaction.message.delete();
         break;
       case 'attache':
-        console.log('Oranges are $0.59 a pound.');
+        attacheToStaff(interaction);
+        interaction.editReply({ content:`<@${authUserId}>, a staff member has been notified. We will get back to you shortly.` });
+        // If I don't make this delete someone will spam the fuck out of you
+        // interaction.message.delete();
+        break;
+      case 'delay':
+        beWithYouSoon(interaction, authUserId);
+        interaction.editReply({ content:`<@${authUserId}> has been notified.` });
+        break;
+      case 'deny':
+        denied(interaction, authUserId);
+        interaction.editReply({ content:`<@${authUserId}>'s application has been denied.` });
+        break;
+      case 'grantRecruit':
+        grantRecruit(interaction, authUserId);
+        interaction.editReply({ content:`<@${authUserId}> has been granted the role of recruit.` });
+        // If I don't make this delete someone will spam the fuck out of you
+        // interaction.message.delete();
+        break;
+      case 'grantAmbassador':
+        grantAmbassador(interaction, authUserId);
+        interaction.editReply({ content:`<@${authUserId}> has been granted the role of ambassador.` });
+        // If I don't make this delete someone will spam the fuck out of you
+        // interaction.message.delete();
+        break;
+      case 'grantAttache':
+        grantAttache(interaction, authUserId);
+        interaction.editReply({ content:`<@${authUserId}> has been granted the role of attache.` });
+        // If I don't make this delete someone will spam the fuck out of you
+        // interaction.message.delete();
         break;
       default:
-        console.log(`Sorry, we are out of ${expr}.`);
+        interaction.editReply({ content:'Error, something has gone wrong.' });
       }
-
-
-      interaction.editReply({ content:`<@${authUserId}>, a recruiter has been notified, we will get back to you shortly.` });
 
 
     }

@@ -1,5 +1,7 @@
 const { Events, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
+const welcomeChannelId = '1078176167321948192';
+
 module.exports = {
   name: Events.GuildMemberAdd,
   async execute(newUser) {
@@ -24,9 +26,11 @@ module.exports = {
     // Creates our action row of buttons
     const newUserActionRow = new ActionRowBuilder();
     newUserActionRow.components.push(new ButtonBuilder().setCustomId(`recruitment-${userId}`).setLabel('Regular Recruitment').setStyle(ButtonStyle.Primary));
+    newUserActionRow.components.push(new ButtonBuilder().setCustomId(`ambassador-${userId}`).setLabel('Allied Ambassador Enlistment').setStyle(ButtonStyle.Secondary));
+    newUserActionRow.components.push(new ButtonBuilder().setCustomId(`attache-${userId}`).setLabel('Allied Attache').setStyle(ButtonStyle.Success));
 
 
-    await newUser.guild.channels.fetch('1078176167321948192')
+    await newUser.guild.channels.fetch(welcomeChannelId)
       .then(channel => {
         channel.send({ embeds: [newUserEmbed], components:[newUserActionRow] });
       });
