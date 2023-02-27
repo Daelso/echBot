@@ -11,6 +11,8 @@ const staffChannelId = '887391851244576768';
 
 const welcomeChannelId = '602225005165674511';
 
+const genChatId = '772556275259015208';
+
 // Role ids
 const recruiterRoleId = '808801568563527731';
 
@@ -140,6 +142,8 @@ const grantRecruit = async (interaction, recruitId) => {
 
   const staffChannel = await interaction.guild.channels.fetch(staffChannelId);
 
+  const generalChannel = await interaction.guild.channels.fetch(genChatId);
+
   try {
 
     if (hasRole) {
@@ -151,6 +155,7 @@ const grantRecruit = async (interaction, recruitId) => {
     await recruit.roles.add(recruitRoleId1);
     await recruit.roles.add(recruitRoleId2);
     staffChannel.send({ content: `<@${interaction.user.id}> has granted <@${recruitId}> the role of recruit.` });
+    generalChannel.send({ content: `Hey <@${recruitId}>, Welcome to Echelon! You have been granted junior clan roles for the time being. Upon attending one official operation, you will be granted full Discord access. If you have any questions, please feel free to ask. Also be sure to add [ECH] tags to your Discord name!` });
 
   }
   catch (error) {
