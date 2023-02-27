@@ -6,17 +6,22 @@ const staffActionRow = new ActionRowBuilder();
 
 // Our various role ids below
 
-const staffChannelId = '1079167174997987359';
+// channels
+const staffChannelId = '887391851244576768';
 
-const recruiterRoleId = '1078779318861303838';
+const welcomeChannelId = '602225005165674511';
 
-const welcomeChannelId = '1078176167321948192';
+// Role ids
+const recruiterRoleId = '808801568563527731';
 
-const recruitRoleId = '1079630362981974027';
 
-const ambassadorRoleId = '1079645434026393600';
+const recruitRoleId1 = '799068165375262740';
 
-const attacheRoleId = '1079647502208344114';
+const recruitRoleId2 = '769254283639914506';
+
+const ambassadorRoleId = '769253575850328084';
+
+const attacheRoleId = '769253326797144104';
 
 
 const recruitToStaff = async (interaction) => {
@@ -131,7 +136,7 @@ const grantRecruit = async (interaction, recruitId) => {
 
   const recruit = await interaction.guild.members.fetch(recruitId);
 
-  const hasRole = recruit.roles.cache.has(recruitRoleId);
+  const hasRole = recruit.roles.cache.has(recruitRoleId1);
 
   const staffChannel = await interaction.guild.channels.fetch(staffChannelId);
 
@@ -143,7 +148,8 @@ const grantRecruit = async (interaction, recruitId) => {
     }
 
 
-    await recruit.roles.add(recruitRoleId);
+    await recruit.roles.add(recruitRoleId1);
+    await recruit.roles.add(recruitRoleId2);
     staffChannel.send({ content: `<@${interaction.user.id}> has granted <@${recruitId}> the role of recruit.` });
 
   }

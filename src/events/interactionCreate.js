@@ -35,19 +35,19 @@ module.exports = {
         recruitToStaff(interaction);
         interaction.editReply({ content:`<@${authUserId}>, a recruiter has been notified. We will get back to you shortly.` });
         // If I don't make this delete someone will spam the fuck out of you
-        // interaction.message.delete();
+        interaction.message.delete();
         break;
       case 'ambassador':
         ambassadorToStaff(interaction);
         interaction.editReply({ content:`<@${authUserId}>, a staff member has been notified. We will get back to you shortly.` });
         // If I don't make this delete someone will spam the fuck out of you
-        // interaction.message.delete();
+        interaction.message.delete();
         break;
       case 'attache':
         attacheToStaff(interaction);
         interaction.editReply({ content:`<@${authUserId}>, a staff member has been notified. We will get back to you shortly.` });
         // If I don't make this delete someone will spam the fuck out of you
-        // interaction.message.delete();
+        interaction.message.delete();
         break;
       case 'delay':
         beWithYouSoon(interaction, authUserId);
@@ -61,19 +61,19 @@ module.exports = {
         grantRecruit(interaction, authUserId);
         interaction.editReply({ content:`<@${authUserId}> has been granted the role of recruit.` });
         // If I don't make this delete someone will spam the fuck out of you
-        // interaction.message.delete();
+        interaction.message.delete();
         break;
       case 'grantAmbassador':
         grantAmbassador(interaction, authUserId);
         interaction.editReply({ content:`<@${authUserId}> has been granted the role of ambassador.` });
         // If I don't make this delete someone will spam the fuck out of you
-        // interaction.message.delete();
+        interaction.message.delete();
         break;
       case 'grantAttache':
         grantAttache(interaction, authUserId);
         interaction.editReply({ content:`<@${authUserId}> has been granted the role of attache.` });
         // If I don't make this delete someone will spam the fuck out of you
-        // interaction.message.delete();
+        interaction.message.delete();
         break;
       default:
         interaction.editReply({ content:'Error, something has gone wrong.' });
