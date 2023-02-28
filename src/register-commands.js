@@ -16,7 +16,7 @@ const commands = [
   },
   {
     name: 'remindme',
-    description: 'Will ping you after a set amount of time with a reminder.',
+    description: 'Will ping you after a set amount of time with a reminder. Format: 3h (3 hours), 20m (20 min)',
   },
 
 ];

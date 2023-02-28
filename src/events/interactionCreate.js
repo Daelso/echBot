@@ -1,5 +1,5 @@
 const { Events } = require('discord.js');
-const { recruitToStaff, ambassadorToStaff, attacheToStaff, beWithYouSoon, denied, grantRecruit, grantAmbassador, grantAttache } = require('../btns/btnMethods.js');
+const { recruitToStaff, ambassadorToStaff, attacheToStaff, ncapAttacheToStaff, beWithYouSoon, denied, grantRecruit, grantAmbassador, grantAttache, grantNCAPAttache } = require('../btns/btnMethods.js');
 
 
 module.exports = {
@@ -49,6 +49,12 @@ module.exports = {
         // If I don't make this delete someone will spam the fuck out of you
         interaction.message.delete();
         break;
+      case 'coalitionAttache':
+        ncapAttacheToStaff(interaction);
+        interaction.editReply({ content:`<@${authUserId}>, a staff member has been notified. We will get back to you shortly.` });
+        // If I don't make this delete someone will spam the fuck out of you
+        interaction.message.delete();
+        break;
       case 'delay':
         beWithYouSoon(interaction, authUserId);
         interaction.editReply({ content:`<@${authUserId}> has been notified.` });
@@ -72,6 +78,12 @@ module.exports = {
       case 'grantAttache':
         grantAttache(interaction, authUserId);
         interaction.editReply({ content:`<@${authUserId}> has been granted the role of attache.` });
+        // If I don't make this delete someone will spam the fuck out of you
+        interaction.message.delete();
+        break;
+      case 'grantNCAPAttache':
+        grantNCAPAttache(interaction, authUserId);
+        interaction.editReply({ content:`<@${authUserId}> has been granted the role of coalition attache.` });
         // If I don't make this delete someone will spam the fuck out of you
         interaction.message.delete();
         break;
