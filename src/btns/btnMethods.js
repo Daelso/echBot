@@ -25,6 +25,8 @@ const ambassadorRoleId = '769253575850328084';
 
 const attacheRoleId = '769253326797144104';
 
+const ncapAttache = '1079854660153778267';
+
 
 const recruitToStaff = async (interaction) => {
 
@@ -90,6 +92,31 @@ const attacheToStaff = async (interaction) => {
     .setImage(interaction.user.displayAvatarURL({ dynamic:true, size:512 }));
 
   staffActionRow.components.push(new ButtonBuilder().setCustomId(`grantAttache-${recruitId}`).setLabel('Grant Attache Role').setStyle(ButtonStyle.Primary));
+  staffActionRow.components.push(new ButtonBuilder().setCustomId(`delay-${recruitId}`).setLabel('Be With Them Shortly').setStyle(ButtonStyle.Secondary));
+  staffActionRow.components.push(new ButtonBuilder().setCustomId(`deny-${recruitId}`).setLabel('Deny').setStyle(ButtonStyle.Danger));
+
+
+  await interaction.guild.channels.fetch(staffChannelId)
+    .then(channel => {
+      channel.send({ content: `<@&${recruiterRoleId}>` });
+      channel.send({ embeds: [recruitEmbed], components: [staffActionRow] });
+    });
+
+};
+
+const ncapAttacheToStaff = async (interaction) => {
+
+  const recruitId = interaction.user.id;
+
+
+  const recruitEmbed = new EmbedBuilder().setTitle('A coalition attache needs assistance!')
+    .setDescription(`<@${recruitId}> is looking to receive the coalition attache role, please select an option below.`)
+    .setColor('Random')
+    .setTimestamp()
+    .setThumbnail('https://www.echclan.net/img/ECHLogo.73a81d16.png')
+    .setImage(interaction.user.displayAvatarURL({ dynamic:true, size:512 }));
+
+  staffActionRow.components.push(new ButtonBuilder().setCustomId(`grantNCAPAttache-${recruitId}`).setLabel('Grant Coalition Attache Role').setStyle(ButtonStyle.Primary));
   staffActionRow.components.push(new ButtonBuilder().setCustomId(`delay-${recruitId}`).setLabel('Be With Them Shortly').setStyle(ButtonStyle.Secondary));
   staffActionRow.components.push(new ButtonBuilder().setCustomId(`deny-${recruitId}`).setLabel('Deny').setStyle(ButtonStyle.Danger));
 
@@ -216,5 +243,30 @@ const grantAttache = async (interaction, recruitId) => {
 
 };
 
+const grantNCAPAttache = async (interaction, recruitId) => {
 
-module.exports = { recruitToStaff, ambassadorToStaff, attacheToStaff, beWithYouSoon, denied, grantRecruit, grantAmbassador, grantAttache };
+  const recruit = await interaction.guild.members.fetch(recruitId);
+
+  const hasRole = recruit.roles.cache.has(ncapAttache);
+
+  const staffChannel = await interaction.guild.channels.fetch(staffChannelId);
+
+  try {
+
+    if (hasRole) {
+      interaction.message.delete();
+      staffChannel.send({ content: `<@${recruitId}> already has the attache role!` });
+    }
+
+
+    await recruit.roles.add(ncapAttache);
+    staffChannel.send({ content: `<@${interaction.user.id}> has granted <@${recruitId}> the role of attache.` });
+
+  }
+  catch (error) {
+    console.log(error);
+  }
+
+};
+
+module.exports = { recruitToStaff, ambassadorToStaff, attacheToStaff, ncapAttacheToStaff, beWithYouSoon, denied, grantRecruit, grantAmbassador, grantAttache, grantNCAPAttache };

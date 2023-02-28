@@ -28,6 +28,7 @@ module.exports = {
     newUserActionRow.components.push(new ButtonBuilder().setCustomId(`recruitment-${userId}`).setLabel('Regular Recruitment').setStyle(ButtonStyle.Primary));
     newUserActionRow.components.push(new ButtonBuilder().setCustomId(`ambassador-${userId}`).setLabel('Allied Ambassador Enlistment').setStyle(ButtonStyle.Secondary));
     newUserActionRow.components.push(new ButtonBuilder().setCustomId(`attache-${userId}`).setLabel('Allied Attache Enlistment').setStyle(ButtonStyle.Success));
+    newUserActionRow.components.push(new ButtonBuilder().setCustomId(`coaltionAttache-${userId}`).setLabel('Coalition Attache Enlistment').setStyle(ButtonStyle.Success));
 
 
     await newUser.guild.channels.fetch(welcomeChannelId)
