@@ -18,6 +18,16 @@ const commands = [
     name: 'remindme',
     description: 'Will ping you after a set amount of time with a reminder. Format: 3h (3 hours), 20m (20 min)',
   },
+  {
+    name: 'removeroles',
+    description: 'Removes roles from the input user',
+    options: [{
+      name: 'user',
+      description: 'User who will have their roles removed',
+      type: ApplicationCommandOptionType.User,
+      required: true,
+    }],
+  },
 
 ];
 
