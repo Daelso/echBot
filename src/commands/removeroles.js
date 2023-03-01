@@ -1,22 +1,21 @@
 const { SlashCommandBuilder } = require('discord.js');
 
-const rolesToRemove = ['986278253754998794', '986278261510258728', '986278265054449764', '986301424763813908' ];
+const rolesToRemove = ['986278253754998794', '986278261510258728', '986278265054449764', '986301424763813908', '1078779318861303838' ];
 
 const adminRoleId = '769348490848632863';
 
+
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('removeroles')
-    .setDescription('Removes active member roles from the input user in the case of switching to Warden.'),
+    .setName('purge')
+    .setDescription('Removes active member roles from users in the case of switching to Warden.'),
   async execute(interaction) {
 
     try {
-      const targetUser = interaction.options.get('user').user.id;
 
       const adminUser = await interaction.guild.members.fetch(interaction.user.id);
 
-
-      const guildTarget = await interaction.guild.members.fetch(targetUser);
+      const guild = interaction.guild;
 
 
       const hasRole = adminUser.roles.cache.has(adminRoleId);
@@ -27,12 +26,28 @@ module.exports = {
         return;
       }
 
-
       rolesToRemove.forEach(async role => {
-        await guildTarget.roles.remove(role);
+
+        guild.roles.fetch(role).then((specificRole) => {
+          if (specificRole !== null) {
+
+            const users = specificRole.members.map(m => m.user.id);
+
+            users.forEach(async user => {
+              const currentUser = await interaction.guild.members.fetch(user);
+
+              currentUser.roles.remove(role);
+
+
+            });
+
+          }
+        });
+
       });
 
-      interaction.reply(`Roles successfully removed from <@${targetUser}>`);
+
+      interaction.reply('Traitors have been purged.');
     }
     catch (error) {
       console.log(error);

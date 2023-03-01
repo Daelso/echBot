@@ -19,14 +19,8 @@ const commands = [
     description: 'Will ping you after a set amount of time with a reminder. Format: 3h (3 hours), 20m (20 min)',
   },
   {
-    name: 'removeroles',
-    description: 'Removes active member roles from the input user in the case of switching to Warden.',
-    options: [{
-      name: 'user',
-      description: 'User who will have their roles removed',
-      type: ApplicationCommandOptionType.User,
-      required: true,
-    }],
+    name: 'purge',
+    description: 'Removes active member roles from those switching to Warden.',
   },
 
 ];
