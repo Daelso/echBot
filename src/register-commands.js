@@ -20,7 +20,7 @@ const commands = [
   },
   {
     name: 'removeroles',
-    description: 'Removes roles from the input user',
+    description: 'Removes active member roles from the input user in the case of switching to Warden.',
     options: [{
       name: 'user',
       description: 'User who will have their roles removed',
