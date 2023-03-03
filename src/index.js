@@ -24,6 +24,7 @@ const client = new Client({
     IntentsBitField.Flags.DirectMessageTyping,
     IntentsBitField.Flags.DirectMessageReactions,
     IntentsBitField.Flags.GuildModeration,
+    IntentsBitField.Flags.GuildVoiceStates,
 
   ],
 });
