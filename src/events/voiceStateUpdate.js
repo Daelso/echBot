@@ -63,7 +63,6 @@ module.exports = {
 
           const curChannel = await oldState.guild.channels.fetch(x);
 
-          console.log(curChannel.members.size);
           if (curChannel.members.size === 0) {
             curChannel.delete();
           }
