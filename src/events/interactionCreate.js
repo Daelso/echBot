@@ -1,4 +1,5 @@
-const { Events } = require('discord.js');
+/* eslint-disable no-case-declarations */
+const { Events, Collection } = require('discord.js');
 const { recruitToStaff, ambassadorToStaff, attacheToStaff, ncapAttacheToStaff, beWithYouSoon, denied, grantRecruit, grantAmbassador, grantAttache, grantNCAPAttache } = require('../btns/btnMethods.js');
 
 
@@ -86,6 +87,24 @@ module.exports = {
         interaction.editReply({ content:`<@${authUserId}> has been granted the role of coalition attache.` });
         // If I don't make this delete someone will spam the fuck out of you
         interaction.message.delete();
+        break;
+      case 'changeChannelName':
+      // We are getting absolutely retarded in here
+        const channel = await interaction.guild.channels.fetch(authUserId);
+        interaction.editReply({ content:'Please respond in the channel with the format: !name yourChannelNameHere.' });
+
+
+        const filter = m => m.content.includes('!name');
+
+        const collector = channel.createMessageCollector({ filter, max: 1, time: 15000 });
+
+        collector.on('collect', m => {
+          const split = m.content.split('!name');
+
+          channel.setName(split[1].trim());
+        });
+
+
         break;
       default:
         interaction.editReply({ content:'Error, something has gone wrong.' });

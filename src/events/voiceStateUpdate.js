@@ -1,8 +1,9 @@
-const { Events, Collection, ChannelType } = require('discord.js');
+const { Events, Collection, ChannelType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
-const voiceCollection = Collection;
+// Collections are an extension of a Map function more or less, AKA a fresh array
+const voiceCollection = new Collection();
 
-const welcomeChannelId = '1078176167321948192';
+const roleId = '1078779318861303838';
 
 
 module.exports = {
@@ -10,26 +11,43 @@ module.exports = {
   once: false,
   async execute(oldState, newState) {
 
+
     if (newState.channel !== null) {
       if (newState.channel.id === '1080998893132718130') {
         const user = newState.member;
-        console.log(user);
-        console.log('we in evanville');
+
+        const hasRole = user.roles.cache.has(roleId);
+
+        if (!hasRole) return;
+
 
         const channel = await newState.guild.channels.create({
-          name: 'I hate Evan',
+          name: `${user.user.username}'s temp vc`,
           type: ChannelType.GuildVoice,
           parent: newState.channel.parent,
         });
         user.voice.setChannel(channel);
+        voiceCollection.set(user.id, channel.id);
+
+
+        const channelEmbed = new EmbedBuilder().setTitle('Echelon Channel Builder')
+          .setDescription(`<@${user.id}>, please use the buttons below to customize your channel. This channel is designed to be temporary and will automatically delete when all users leave.`)
+          .setColor('Green')
+          .setTimestamp()
+          .setThumbnail('https://www.echclan.net/img/ECHLogo.73a81d16.png')
+          .setFooter({ text: 'Wardens go away', iconURL: 'https://www.echclan.net/img/ECHLogo.73a81d16.png' });
+
+        const actionRow = new ActionRowBuilder();
+        actionRow.components.push(new ButtonBuilder().setCustomId(`changeChannelName-${channel.id}`).setLabel('✍🏻 Set Channel Name').setStyle(ButtonStyle.Secondary));
+
+
+        channel.send({ embeds: [channelEmbed], components:[actionRow] });
       }
     }
 
 
     if (newState.channel === null) {
-      console.log('we have left evan town');
-
-
+      if (oldState.channel.id === voiceCollection.get(newState.id)) return oldState.channel.delete();
     }
 
 
