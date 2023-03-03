@@ -39,6 +39,7 @@ module.exports = {
 
         const actionRow = new ActionRowBuilder();
         actionRow.components.push(new ButtonBuilder().setCustomId(`changeChannelName-${channel.id}`).setLabel('✍🏻 Set Channel Name').setStyle(ButtonStyle.Secondary));
+        actionRow.components.push(new ButtonBuilder().setCustomId(`changeUserLimit-${channel.id}`).setLabel('🤼 Set User Limit').setStyle(ButtonStyle.Secondary));
 
 
         channel.send({ embeds: [channelEmbed], components:[actionRow] });
