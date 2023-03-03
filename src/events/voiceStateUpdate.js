@@ -48,7 +48,8 @@ module.exports = {
 
 
     if (newState.channel === null) {
-      if (oldState.channel.id === voiceCollection.get(newState.id)) return oldState.channel.delete();
+      const memberCollection = oldState.channel.members;
+      if (oldState.channel.id === voiceCollection.get(newState.id) && memberCollection.size === 0) return oldState.channel.delete();
     }
 
 
