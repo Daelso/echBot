@@ -11,7 +11,7 @@ const staffChannelId = '887391851244576768';
 
 const welcomeChannelId = '602225005165674511';
 
-const genChatId = '772556275259015208';
+const genChatId = '1080532236048285716';
 
 // Role ids
 const recruiterRoleId = '808801568563527731';
