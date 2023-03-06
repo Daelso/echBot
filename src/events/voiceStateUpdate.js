@@ -61,11 +61,20 @@ module.exports = {
 
         voiceCollection.forEach(async x => {
 
-          const curChannel = await oldState.guild.channels.fetch(x);
+          oldState.guild.channels.fetch(x).then((chan => {
 
-          if (curChannel && curChannel.members.size === 0) {
-            curChannel.delete();
-          }
+            if (!chan) {
+              return;
+            }
+
+            if (chan.members.size === 0) {
+              chan.delete();
+            }
+
+          })).catch(error => {
+            console.log('No channel found to delete.');
+          });
+
 
         });
 
