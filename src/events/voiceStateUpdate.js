@@ -14,25 +14,53 @@ module.exports = {
   once: false,
   async execute(oldState, newState) {
 
-    try {
+    if (newState.channel === null || (oldState.channel !== null && newState.channel.id !== oldState.channel.id)) {
+
+      // if user leaves vc altogether or switches to another channel we trigger a loop through our collection of temp channels held in memory
+      // any temp channels that have 0 users left will get deleted
+
+      voiceCollection.forEach(async x => {
 
 
-      if (newState.channel !== null) {
+        oldState.guild.channels.fetch(x).then((chan => {
+
+          if (!chan) {
+            return;
+          }
+
+          if (chan.members.size === 0) {
+            chan.delete();
+          }
+
+        })).catch(error => {
+          console.log('No channel found to delete.');
+        });
 
 
-        if (newState.channel.id === creatorChannel) {
-          const user = newState.member;
+      });
 
-          const hasRole = user.roles.cache.has(roleId);
-
-          if (!hasRole) return;
+    }
 
 
+    if (newState.channel !== null) {
+
+
+      if (newState.channel.id === creatorChannel) {
+        const user = newState.member;
+
+        const hasRole = user.roles.cache.has(roleId);
+
+        if (!hasRole) return;
+
+
+        try {
           const channel = await newState.guild.channels.create({
             name: `${user.user.username}'s temp vc`,
             type: ChannelType.GuildVoice,
             parent: newState.channel.parent,
           });
+
+
           user.voice.setChannel(channel);
           voiceCollection.set(user.id, channel.id);
 
@@ -51,37 +79,10 @@ module.exports = {
 
           channel.send({ embeds: [channelEmbed], components:[actionRow] });
         }
+        catch (error) {
+          console.log(error);
+        }
       }
-
-
-      if (newState.channel === null || (oldState.channel !== null && newState.channel.id !== oldState.channel.id)) {
-
-        // if user leaves vc altogether or switches to another channel we trigger a loop through our collection of temp channels held in memory
-        // any temp channels that have 0 users left will get deleted
-
-        voiceCollection.forEach(async x => {
-
-          oldState.guild.channels.fetch(x).then((chan => {
-
-            if (!chan) {
-              return;
-            }
-
-            if (chan.members.size === 0) {
-              chan.delete();
-            }
-
-          })).catch(error => {
-            console.log('No channel found to delete.');
-          });
-
-
-        });
-
-      }
-    }
-    catch (error) {
-      console.log(error);
     }
 
 
