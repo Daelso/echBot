@@ -22,8 +22,6 @@ module.exports = {
       const btnType = splitArr[0];
       const authUserId = splitArr[1];
       const interactorId = interaction.user.id;
-      const channel = await interaction.guild.channels.fetch(authUserId);
-
 
       // Compares the original user id from customID with whoever interacts with it, if they don't match we end method.
       // This is to prevent other users from messing with buttons not intended for them.
@@ -91,7 +89,9 @@ module.exports = {
         interaction.message.delete();
         break;
       case 'changeChannelName':
-      // We are getting absolutely retarded in here
+        const channel = await interaction.guild.channels.fetch(authUserId);
+
+        // We are getting absolutely retarded in here
         interaction.editReply({ content:'Please respond in the channel with the format: !name your channel name here.' });
 
 
@@ -110,18 +110,20 @@ module.exports = {
 
         break;
       case 'changeUserLimit':
+        const limitChannel = await interaction.guild.channels.fetch(authUserId);
+
         // We are getting absolutely retarded in here
         interaction.editReply({ content:'Please respond in the channel with the format: !limit yourNumHere.' });
 
 
         var filter = m => m.content.includes('!limit');
 
-        var collector = channel.createMessageCollector({ filter, max: 1, time: 15000 });
+        var collector = limitChannel.createMessageCollector({ filter, max: 1, time: 15000 });
 
         collector.on('collect', m => {
           const split = m.content.split(' ');
-          channel.edit({ userLimit: split[1] });
-          channel.send(`User limit set to ${split[1]}`);
+          limitChannel.edit({ userLimit: split[1] });
+          limitChannel.send(`User limit set to ${split[1]}`);
         });
 
 
