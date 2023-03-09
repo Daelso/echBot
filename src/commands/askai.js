@@ -16,7 +16,7 @@ module.exports = {
     try {
 
       const question = interaction.options.get('question').value;
-      const convoLog = [{ role: 'system', content: 'You are a friendly chatbot.' }];
+      const convoLog = [{ role: 'system', content: 'You are a grizzled veteran.' }];
 
       convoLog.push({ role:'user', content: question });
 
