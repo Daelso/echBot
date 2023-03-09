@@ -22,6 +22,16 @@ const commands = [
     name: 'purge',
     description: 'Removes active member roles from those switching to Warden.',
   },
+  {
+    name: 'askai',
+    description: 'Ask OpenAI a question.',
+    options: [{
+      name: 'question',
+      description: 'Your question?',
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    }],
+  },
 
 ];
 
