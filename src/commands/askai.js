@@ -12,7 +12,6 @@ module.exports = {
     .setName('askai')
     .setDescription('Ask OpenAI a question.'),
   async execute(interaction) {
-    console.log(interaction.user.bot);
     if (interaction.user.bot) return;
     try {
 
@@ -35,6 +34,7 @@ module.exports = {
     }
     catch (error) {
       console.log(error);
+      interaction.editReply({ content: 'We are out of AI tokens, make Connor buy more.' });
     }
 
 
