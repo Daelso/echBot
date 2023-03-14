@@ -16,7 +16,7 @@ module.exports = {
     try {
 
       const question = interaction.options.get('question').value;
-      const convoLog = [{ role: 'system', content: 'You are an experienced veteran of the video game Foxhole.' }];
+      const convoLog = [{ role: 'system', content: 'You are an experienced veteran of the video game Foxhole. You are a member of the Colonials faction.' }];
 
       convoLog.push({ role:'user', content: question });
 
