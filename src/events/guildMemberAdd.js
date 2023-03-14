@@ -4,6 +4,7 @@ const welcomeChannelId = '602225005165674511';
 
 module.exports = {
   name: Events.GuildMemberAdd,
+  once: false,
   async execute(newUser) {
 
     const userId = newUser.user.id;
