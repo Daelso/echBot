@@ -5,6 +5,7 @@ const { recruitToStaff, ambassadorToStaff, attacheToStaff, ncapAttacheToStaff, b
 
 module.exports = {
   name: Events.InteractionCreate,
+  once: false,
   async execute(interaction) {
     // We don't want any PM functionality so just a quick check that this is happening in the server
     if (!interaction.inGuild()) return;
