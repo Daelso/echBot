@@ -49,6 +49,8 @@ const recruitToStaff = async (interaction) => {
     .then(channel => {
       channel.send({ content: `<@&${recruiterRoleId}>` });
       channel.send({ embeds: [recruitEmbed], components: [staffActionRow] });
+    }).catch(err => {
+      console.log(err);
     });
 
 };
@@ -75,6 +77,8 @@ const ambassadorToStaff = async (interaction) => {
     .then(channel => {
       channel.send({ content: `<@&${recruiterRoleId}>` });
       channel.send({ embeds: [recruitEmbed], components: [staffActionRow] });
+    }).catch(err => {
+      console.log(err);
     });
 
 };
@@ -100,6 +104,8 @@ const attacheToStaff = async (interaction) => {
     .then(channel => {
       channel.send({ content: `<@&${recruiterRoleId}>` });
       channel.send({ embeds: [recruitEmbed], components: [staffActionRow] });
+    }).catch(err => {
+      console.log(err);
     });
 
 };
@@ -125,6 +131,8 @@ const ncapAttacheToStaff = async (interaction) => {
     .then(channel => {
       channel.send({ content: `<@&${recruiterRoleId}>` });
       channel.send({ embeds: [recruitEmbed], components: [staffActionRow] });
+    }).catch(err => {
+      console.log(err);
     });
 
 };
@@ -134,6 +142,8 @@ const beWithYouSoon = async (interaction, recruitId) => {
   await interaction.guild.channels.fetch(welcomeChannelId)
     .then(channel => {
       channel.send({ content: `<@${recruitId}>, <@${interaction.user.id}> has seen your application and will be in touch with you shortly!` });
+    }).catch(err => {
+      console.log(err);
     });
 
 
@@ -146,11 +156,15 @@ const denied = async (interaction, recruitId) => {
   await interaction.guild.channels.fetch(welcomeChannelId)
     .then(channel => {
       channel.send({ content: `<@${recruitId}>, <@${interaction.user.id}> has DENIED your application. Thank you for applying.` });
+    }).catch(err => {
+      console.log(err);
     });
 
   await interaction.guild.channels.fetch(staffChannelId)
     .then(channel => {
       channel.send({ content: `<@${interaction.user.id}> has DENIED <@${recruitId}>'s application.` });
+    }).catch(err => {
+      console.log(err);
     });
 
   // Deletes and closes the interaction

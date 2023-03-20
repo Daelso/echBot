@@ -23,6 +23,10 @@ const commands = [
     description: 'Removes active member roles from those switching to Warden.',
   },
   {
+    name: 'getroles',
+    description: 'Allows the user to set their optional discord roles.',
+  },
+  {
     name: 'askai',
     description: 'Ask OpenAI a question.',
     options: [{
