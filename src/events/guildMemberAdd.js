@@ -35,6 +35,8 @@ module.exports = {
     await newUser.guild.channels.fetch(welcomeChannelId)
       .then(channel => {
         channel.send({ embeds: [newUserEmbed], components:[newUserActionRow] });
+      }).catch(err => {
+        console.log(err);
       });
 
   },
