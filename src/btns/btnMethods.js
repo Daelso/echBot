@@ -2,8 +2,6 @@ const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('
 
 // This file handles individual button functions, just keeping stuff clean, there will be some repetition please forgive me coding gods
 
-const staffActionRow = new ActionRowBuilder();
-
 // Our various role ids below
 
 // channels
@@ -29,6 +27,8 @@ const ncapAttache = '1079854660153778267';
 
 
 const recruitToStaff = async (interaction) => {
+
+  const staffActionRow = new ActionRowBuilder();
 
   const recruitId = interaction.user.id;
 
@@ -60,7 +60,7 @@ const ambassadorToStaff = async (interaction) => {
 
   const recruitId = interaction.user.id;
 
-
+  const staffActionRow = new ActionRowBuilder();
   const recruitEmbed = new EmbedBuilder().setTitle('A potential ally is reaching out!')
     .setDescription(`<@${recruitId}> has applied as an Allied Ambassador, please select an option below.`)
     .setColor('Random')
@@ -87,7 +87,7 @@ const attacheToStaff = async (interaction) => {
 
   const recruitId = interaction.user.id;
 
-
+  const staffActionRow = new ActionRowBuilder();
   const recruitEmbed = new EmbedBuilder().setTitle('An allied attache needs assistance!')
     .setDescription(`<@${recruitId}> is looking to receive the allied attache role, please select an option below.`)
     .setColor('Random')
@@ -114,7 +114,7 @@ const ncapAttacheToStaff = async (interaction) => {
 
   const recruitId = interaction.user.id;
 
-
+  const staffActionRow = new ActionRowBuilder();
   const recruitEmbed = new EmbedBuilder().setTitle('A coalition attache needs assistance!')
     .setDescription(`<@${recruitId}> is looking to receive the coalition attache role, please select an option below.`)
     .setColor('Random')
