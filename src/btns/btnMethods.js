@@ -196,7 +196,7 @@ const grantRecruit = async (interaction, recruitId) => {
     await recruit.roles.add(recruitRoleId1);
     await recruit.roles.add(recruitRoleId2);
     staffChannel.send({ content: `<@${interaction.user.id}> has granted <@${recruitId}> the role of recruit.` });
-    generalChannel.send({ content: `Hey <@${recruitId}>, Welcome to Echelon! You have been granted junior clan roles for the time being. Upon attending one official operation, you will be granted full Discord access. If you have any questions, please feel free to ask. Also be sure to add [ECH] tags to your Discord name!` });
+    generalChannel.send({ content: `Hey <@${recruitId}>, Welcome to Echelon! You have been granted junior clan roles for the time being. Upon attending one official operation, you will be granted full Discord access. If you have any questions, please feel free to ask. Make sure you use the /getroles command and set some roles so you can be informed of any specialized operations. Also be sure to add [ECH] tags to your Discord name!` });
 
   }
   catch (error) {
