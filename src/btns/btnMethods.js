@@ -19,6 +19,8 @@ const recruitRoleId1 = '799068165375262740';
 
 const recruitRoleId2 = '769254283639914506';
 
+const recruitRoles = ['799068165375262740', '769254283639914506', '986277861205893160', '769349253964759046', '803841157196939274', '793222489923780608'];
+
 const ambassadorRoleId = '769253575850328084';
 
 const attacheRoleId = '769253326797144104';
@@ -193,8 +195,10 @@ const grantRecruit = async (interaction, recruitId) => {
     }
 
 
-    await recruit.roles.add(recruitRoleId1);
-    await recruit.roles.add(recruitRoleId2);
+    recruitRoles.forEach(async role => {
+      await recruit.roles.add(role);
+    });
+
     staffChannel.send({ content: `<@${interaction.user.id}> has granted <@${recruitId}> the role of recruit.` });
     generalChannel.send({ content: `Hey <@${recruitId}>, Welcome to Echelon! You have been granted junior clan roles for the time being. Upon attending one official operation, you will be granted full Discord access. If you have any questions, please feel free to ask. Make sure you use the /getroles command and set some roles so you can be informed of any specialized operations. You can use the command anywhere, only you will be able to see it so don't worry about spam. Also be sure to add [ECH] tags to your Discord name!` });
 
