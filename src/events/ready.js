@@ -1,4 +1,4 @@
-const { Events, ActivityType } = require('discord.js');
+const { Events, ActivityType } = require("discord.js");
 
 module.exports = {
   name: Events.ClientReady,
@@ -7,9 +7,8 @@ module.exports = {
     console.log(`Ready! Logged in as ${client.user.tag}`);
 
     client.user.setActivity({
-      name: 'Warden\'s Die',
-      type:ActivityType.Watching,
+      name: "Warden's Die",
+      type: ActivityType.Watching,
     });
-
   },
 };
