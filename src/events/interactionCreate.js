@@ -55,6 +55,7 @@ module.exports = {
         switch (btnType) {
           case "recruitment":
             await recruitModal(interaction);
+            recruitToStaff(interaction);
             break;
           case "ambassador":
             ambassadorToStaff(interaction);

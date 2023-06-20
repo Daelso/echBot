@@ -114,7 +114,7 @@ const recruitModal = async (interaction) => {
         skillsAnswer,
         levelAnswer,
       };
-      recruitToStaff(interaction);
+
       await interaction.guild.channels
         .fetch(staffChannelId)
         .then((channel) => {
