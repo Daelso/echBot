@@ -1,4 +1,3 @@
-/* eslint-disable no-case-declarations */
 const { Events } = require("discord.js");
 const {
   recruitToStaff,
@@ -12,6 +11,8 @@ const {
   grantAttache,
   grantNCAPAttache,
 } = require("../btns/btnMethods.js");
+
+const { recruitModal } = require("../modals/recruitModal.js");
 const { handleSelectChoice } = require("../roleSelectMenu/roleSelectMenu");
 
 module.exports = {
@@ -34,7 +35,6 @@ module.exports = {
     if (interaction.isButton()) {
       try {
         // reply loader
-        await interaction.deferReply({ ephemeral: true });
         // this is a little retarded but we're bouncing embeds instead of using proper slash commands so I'll try to be clean
         const userBtnPrefix = ["recruitment", "ambassador", "attache"];
 
@@ -48,18 +48,13 @@ module.exports = {
         // This is to prevent other users from messing with buttons not intended for them.
         // the includes is to only run this check on user interactable buttons and not staff ones
         if (interactorId !== authUserId && userBtnPrefix.includes(btnType)) {
-          interaction.editReply({ content: "That doesn't belong to you!" });
+          interaction.reply({ content: "That doesn't belong to you!" });
           return;
         }
 
         switch (btnType) {
           case "recruitment":
-            recruitToStaff(interaction);
-            interaction.editReply({
-              content: `<@${authUserId}>, a recruiter has been notified. We will get back to you shortly.`,
-            });
-            // If I don't make this delete someone will spam the fuck out of you
-            interaction.message.delete();
+            await recruitModal(interaction);
             break;
           case "ambassador":
             ambassadorToStaff(interaction);
