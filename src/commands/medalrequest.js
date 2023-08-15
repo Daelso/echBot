@@ -5,8 +5,6 @@ const {
   SlashCommandBuilder,
   TextInputBuilder,
   EmbedBuilder,
-  StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
 } = require("discord.js");
 
 module.exports = {
@@ -43,7 +41,7 @@ module.exports = {
     await interaction.showModal(modal);
 
     const filter = (interaction) =>
-      interaction.customId === `promotionModal-${interaction.user.id}`;
+      interaction.customId === `medalModal-${interaction.user.id}`;
 
     interaction
       .awaitModalSubmit({ filter, time: 180_000 })
