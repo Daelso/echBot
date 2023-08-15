@@ -45,6 +45,10 @@ const commands = [
     name: "promotionrequest",
     description: "Request a promotion!",
   },
+  {
+    name: "medalrequest",
+    description: "Request a medal!",
+  },
 ];
 
 const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
