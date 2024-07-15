@@ -10,7 +10,7 @@ const { recruitToStaff } = require("../btns/btnMethods.js");
 
 const staffChannelId = "887391851244576768";
 
-const question1 = "Are you 18+?";
+const question1 = "Are you a mature-minded player?";
 const question2 = "Do you have any areas of interest in Foxhole?";
 const question3 = "What is your primary timezone?";
 const question4 = "Do you have any extra skills you can offer?";
