@@ -24,7 +24,7 @@ module.exports = {
       .setTimestamp()
       .setThumbnail("https://www.echclan.net/img/ECHLogo.73a81d16.png")
       .addFields(
-        { name: "Rule 1:", value: "Matured Minded Players Only" },
+        { name: "Rule 1:", value: "Mature Minded Players Only" },
         {
           name: "Rule 2:",
           value:
