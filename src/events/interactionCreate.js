@@ -1,5 +1,9 @@
 /* eslint-disable no-case-declarations */
-const { Events } = require("discord.js");
+const { Events,   ModalBuilder,
+  TextInputBuilder,
+  TextInputStyle,
+  ActionRowBuilder } = require("discord.js");
+
 const {
   recruitToStaff,
   ambassadorToStaff,
@@ -12,6 +16,7 @@ const {
   grantAttache,
   grantNCAPAttache,
 } = require("../btns/btnMethods.js");
+const { v4: uuidv4 } = require('uuid');
 const { handleSelectChoice } = require("../roleSelectMenu/roleSelectMenu");
 
 module.exports = {
@@ -21,26 +26,138 @@ module.exports = {
     // We don't want any PM functionality so just a quick check that this is happening in the server
     if (!interaction.inGuild()) return;
 
-    if (interaction.isStringSelectMenu()) {
-      try {
-        handleSelectChoice(interaction);
-      } catch (err) {
-        console.log(err);
-      }
-      return;
-    }
-
     // Button handling
     if (interaction.isButton()) {
       try {
-        // reply loader
-        await interaction.deferReply({ ephemeral: true });
+                const splitArr = interaction.customId.split("-");
+        const btnType = splitArr[0];
+
+        console.log(interaction.customId)
+              if (btnType === "open_application_form") {
+        const authUserId = interaction.user.id;
+        const uuid = uuidv4()
+        console.log(uuid)
+
+        const modal = new ModalBuilder()
+          .setCustomId(`applicationForm-${authUserId}-${uuid}`)
+          .setTitle("ECH Clan Application");
+
+        modal.addComponents(
+          new ActionRowBuilder().addComponents(
+            new TextInputBuilder()
+              .setCustomId("inGameName")
+              .setLabel("In-game name")
+              .setStyle(TextInputStyle.Short)
+              .setRequired(true)
+          ),
+          new ActionRowBuilder().addComponents(
+            new TextInputBuilder()
+              .setCustomId("stayColonial")
+              .setLabel("Will you stay Colonial?")
+              .setStyle(TextInputStyle.Short)
+              .setRequired(true)
+          ),
+          new ActionRowBuilder().addComponents(
+            new TextInputBuilder()
+              .setCustomId("readRules")
+              .setLabel("Have you read our rules?")
+              .setStyle(TextInputStyle.Short)
+              .setRequired(true)
+          ),
+          new ActionRowBuilder().addComponents(
+            new TextInputBuilder()
+              .setCustomId("gameAreas")
+              .setLabel("What areas of the game do you prefer?")
+              .setStyle(TextInputStyle.Paragraph)
+              .setRequired(true)
+          ),
+          new ActionRowBuilder().addComponents(
+            new TextInputBuilder()
+              .setCustomId("questionsComments")
+              .setLabel("Other questions or comments?")
+              .setStyle(TextInputStyle.Paragraph)
+              .setRequired(false)
+          )
+        );
+
+try {
+  await interaction.showModal(modal);
+
+  const filter = (i) => 
+    i.customId === `applicationForm-${authUserId}-${uuid}` &&
+    i.user.id === authUserId;
+
+  interaction
+    .awaitModalSubmit({ filter, time: 15_000 }) // up to 60s is a safe default
+    .then((modalInteraction) => {
+      console.log(`${modalInteraction.customId} was submitted!`);
+              const nameValue =
+          modalInteraction.fields.getTextInputValue("inGameName");
+
+        const colonialValue =
+          modalInteraction.fields.getTextInputValue("stayColonial");
+
+          
+        const readRulesValue =
+          modalInteraction.fields.getTextInputValue("readRules");
+
+       const gameAreasValue =
+          modalInteraction.fields.getTextInputValue("gameAreas");
+             const questionsValue =
+          modalInteraction.fields.getTextInputValue("questionsComments");
+
+          console.log(nameValue)
+          console.log(colonialValue)
+          console.log(readRulesValue)
+          console.log(gameAreasValue)
+          console.log(questionsValue)
+
+          const answers_obj = {
+            ign: nameValue,
+            colonial: colonialValue,
+            readRules:readRulesValue,
+            gameAreas: gameAreasValue,
+            questions: questionsValue
+          }
+      modalInteraction.reply({
+        content: "Thanks for your application, an officer will reach out to you ASAP!",
+        ephemeral: true,
+      });
+
+ recruitToStaff(interaction, answers_obj)
+      return;
+    })
+    .catch((err) => {
+      // This happens when the modal times out or is dismissed
+      if (err.code === 'INTERACTION_COLLECTOR_ERROR' || err instanceof Error) {
+        console.log("Modal was cancelled or timed out.");
+        // No need to reply or do anything here
+        return;
+      } else {
+        console.error("Unexpected modal error:", err);
+        return;
+      }
+    });
+
+} catch (err) {
+  console.error("Failed to show modal:", err);
+        await interaction.reply('Done!')
+        return;
+
+}
+      return;
+    }
+
+
+    
+      await interaction.deferReply({ ephemeral: true });
+  
+
         // this is a little retarded but we're bouncing embeds instead of using proper slash commands so I'll try to be clean
         const userBtnPrefix = ["recruitment", "ambassador", "attache"];
 
         // customids are set to the button as [buttonlabel]-[assigneduserid], we split them to handle which button is called and prevent other users from touching btns
-        const splitArr = interaction.customId.split("-");
-        const btnType = splitArr[0];
+
         const authUserId = splitArr[1];
         const interactorId = interaction.user.id;
 
@@ -185,8 +302,9 @@ module.exports = {
             break;
           default:
             interaction.editReply({
-              content: "Error, something has gone wrong.",
+              content: "Error, something has gone wrong, please try again",
             });
+           break;
         }
       } catch (err) {
         console.log(err);

@@ -29,18 +29,18 @@ const commands = [
     name: "getroles",
     description: "Allows the user to set their optional discord roles.",
   },
-  {
-    name: "askai",
-    description: "Ask OpenAI a question.",
-    options: [
-      {
-        name: "question",
-        description: "Your question?",
-        type: ApplicationCommandOptionType.String,
-        required: true,
-      },
-    ],
-  },
+  // {
+  //   name: "askai",
+  //   description: "Ask OpenAI a question.",
+  //   options: [
+  //     {
+  //       name: "question",
+  //       description: "Your question?",
+  //       type: ApplicationCommandOptionType.String,
+  //       required: true,
+  //     },
+  //   ],
+  // },
   {
     name: "promotionrequest",
     description: "Request a promotion!",
