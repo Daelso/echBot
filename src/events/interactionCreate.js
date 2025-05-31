@@ -106,11 +106,7 @@ try {
              const questionsValue =
           modalInteraction.fields.getTextInputValue("questionsComments");
 
-          console.log(nameValue)
-          console.log(colonialValue)
-          console.log(readRulesValue)
-          console.log(gameAreasValue)
-          console.log(questionsValue)
+
 
           const answers_obj = {
             ign: nameValue,
