@@ -36,7 +36,7 @@ const attacheRoleId = "769253326797144104";
 
 const ncapAttache = "1079854660153778267";
 
-const recruitToStaff = async (interaction) => {
+const recruitToStaff = async (interaction, info) => {
   const staffActionRow = new ActionRowBuilder();
 
   const recruitId = interaction.user.id;
@@ -74,6 +74,11 @@ const recruitToStaff = async (interaction) => {
     .fetch(staffChannelId)
     .then((channel) => {
       channel.send({ content: `<@&${recruiterRoleId}>` });
+      channel.send({ content: `IGN: ${info.ign}` });
+      channel.send({ content: `Do you intend on staying Colonial for the forseeable future?: ${info.colonial}` });
+      channel.send({ content: `Have you read our rules?: ${info.readRules}` });
+      channel.send({ content: `What areas of the game do you want to experience?: ${info.gameAreas}` });
+      channel.send({ content: `Do you have any other questions/comments?: ${info.questionsValue ? info.questionsValue : 'N/A'}` });
       channel.send({ embeds: [recruitEmbed], components: [staffActionRow] });
     })
     .catch((err) => {
