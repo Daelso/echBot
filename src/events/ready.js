@@ -36,8 +36,8 @@ module.exports = {
         .setStyle(ButtonStyle.Primary)
     );
 
-    // Fetch recent messages and check if embed already exists
-    const messages = await channel.messages.fetch({ limit: 50 }); // Adjust limit as needed
+ 
+    const messages = await channel.messages.fetch({ limit: 50 }); 
     const alreadyExists = messages.some(msg => {
       const msgEmbed = msg.embeds[0];
       return (
