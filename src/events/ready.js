@@ -1,4 +1,12 @@
-const { Events, ActivityType, ChannelType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const {
+  Events,
+  ActivityType,
+  ChannelType,
+  EmbedBuilder,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+} = require("discord.js");
 
 module.exports = {
   name: Events.ClientReady,
@@ -11,11 +19,8 @@ module.exports = {
       type: ActivityType.Watching,
     });
 
-//creates btn in channel
     const channelId = '1378185080522145874';
     const channel = await client.channels.fetch(channelId);
-
-
     if (!channel || channel.type !== ChannelType.GuildText) return;
 
     const embed = new EmbedBuilder()
@@ -31,10 +36,27 @@ module.exports = {
         .setStyle(ButtonStyle.Primary)
     );
 
-    await channel.send({ embeds: [embed], components: [row] });
-      channel.send({ content: `Due to discord rate limiting you may need to click this button multiple times, give it a few attempts before reaching out to staff.` });
+    // Fetch recent messages and check if embed already exists
+    const messages = await channel.messages.fetch({ limit: 50 }); // Adjust limit as needed
+    const alreadyExists = messages.some(msg => {
+      const msgEmbed = msg.embeds[0];
+      return (
+        msg.embeds.length > 0 &&
+        msgEmbed.title === embed.data.title &&
+        msgEmbed.description === embed.data.description &&
+        msgEmbed.thumbnail?.url === embed.data.thumbnail.url &&
+        msgEmbed.color === embed.data.color
+      );
+    });
 
-    console.log(`✅ Application message sent to #${channel.name}`);
-
+    if (!alreadyExists) {
+      await channel.send({ embeds: [embed], components: [row] });
+      await channel.send({
+        content: `Due to Discord rate limiting, you may need to click this button multiple times. Give it a few attempts before reaching out to staff.`,
+      });
+      console.log(`✅ Application message sent to #${channel.name}`);
+    } else {
+      console.log(`ℹ️ Application message already exists in #${channel.name}`);
+    }
   },
 };
