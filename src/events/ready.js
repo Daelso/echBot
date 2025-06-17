@@ -38,6 +38,8 @@ module.exports = {
 
  
     const messages = await channel.messages.fetch({ limit: 50 }); 
+
+    const unver_chan = '1080532236048285716'
     const alreadyExists = messages.some(msg => {
       const msgEmbed = msg.embeds[0];
       return (
@@ -54,6 +56,10 @@ module.exports = {
       await channel.send({
         content: `Due to Discord rate limiting, you may need to click this button multiple times. Give it a few attempts before reaching out to staff.`,
       });
+      await channel.send({
+        content: `Please include an F1 screenshot and post it in <#${unver_chan}>.`,
+      });
+
       console.log(`✅ Application message sent to #${channel.name}`);
     } else {
       console.log(`ℹ️ Application message already exists in #${channel.name}`);
