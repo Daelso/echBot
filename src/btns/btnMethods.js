@@ -78,7 +78,7 @@ const recruitToStaff = async (interaction, info) => {
       channel.send({ content: `Do you intend on staying Colonial for the forseeable future?: ${info.colonial}` });
       channel.send({ content: `Have you read our rules?: ${info.readRules}` });
       channel.send({ content: `What areas of the game do you want to experience?: ${info.gameAreas}` });
-      channel.send({ content: `Do you have any other questions/comments?: ${info.questionsComments ? info.questionsComments : 'N/A'}` });
+      channel.send({ content: `Do you have any other questions/comments?: ${info.questions ? info.questions : 'N/A'}` });
       channel.send({ embeds: [recruitEmbed], components: [staffActionRow] });
     })
     .catch((err) => {
