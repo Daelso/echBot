@@ -88,7 +88,7 @@ try {
     i.user.id === authUserId;
 
   interaction
-    .awaitModalSubmit({ filter, time: 120_000 }) // up to 60s is a safe default
+    .awaitModalSubmit({ filter, time: 180_000 }) // up to 60s is a safe default
     .then((modalInteraction) => {
       console.log(`${modalInteraction.customId} was submitted!`);
               const nameValue =
